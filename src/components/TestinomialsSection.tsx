@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 
 interface Testimonial {
@@ -11,44 +12,71 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     quote:
-      "I've been using bg.removal for nearly two years, primarily for Instagram, and it has been incredibly user-friendly, making my work much easier.",
+      "bg.removal is a game-changer for my e-commerce business. The quality is consistently excellent, saving me hours of manual editing every week.",
     author: "Richard Nelson",
-    title: "Web Developer",
+    title: "E-commerce Founder",
     avatar: "RN",
-    color: "bg-blue-500",
+    color: "bg-blue-600",
   },
   {
     quote:
-      "I've been using bg.removal for nearly 6 months, I had a fantastic experience. The quality is top-notch. I recommend others to try this app.",
+      "The precision is incredible. I had a fantastic experience, and the output is flawless. I highly recommend this app to every designer.",
     author: "Donald Jackman",
-    title: "UI Designer",
+    title: "Lead UI Designer",
     avatar: "DJ",
-    color: "bg-amber-500",
+    color: "bg-amber-600",
   },
 ];
 
 export function TestimonialsSection() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { type: "spring", stiffness: 100, damping: 12 },
+    },
+  };
+
   return (
-    <section className="px-6 md:px-12 lg:px-20 py-20">
-      <h2 className="text-4xl md:text-5xl font-bold text-center text-slate-900 mb-16">
-        Customer Testimonials
+    <section className="px-6 md:px-12 lg:px-20 py-20 bg-white">
+      <h2 className="text-4xl md:text-5xl font-extrabold text-center text-slate-900 mb-16 tracking-tight">
+        Trusted by Professionals Globally
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {testimonials.map((testimonial, index) => (
-          <div
+          <motion.div
             key={index}
-            className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition"
+            variants={itemVariants}
+            whileHover={{ y: -4, boxShadow: "0 15px 30px rgba(0,0,0,0.08)" }}
+            className="bg-white border border-slate-200 rounded-3xl p-8 shadow-lg transition-all"
           >
-            <Quote className="w-8 h-8 text-slate-300 mb-6" />
+            <Quote className="w-8 h-8 text-purple-300 mb-6" />
 
-            <p className="text-slate-700 leading-relaxed mb-8">
-              {testimonial.quote}
+            <p className="text-xl italic text-slate-700 leading-relaxed mb-8">
+              &ldquo;{testimonial.quote}&rdquo;
             </p>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <div
-                className={`w-12 h-12 ${testimonial.color} rounded-full flex items-center justify-center text-white font-bold text-lg`}
+                className={`w-12 h-12 ${testimonial.color} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md`}
               >
                 {testimonial.avatar}
               </div>
@@ -56,12 +84,12 @@ export function TestimonialsSection() {
                 <p className="font-semibold text-slate-900">
                   {testimonial.author}
                 </p>
-                <p className="text-sm text-slate-600">{testimonial.title}</p>
+                <p className="text-sm text-slate-500">{testimonial.title}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

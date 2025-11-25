@@ -1,19 +1,22 @@
-import "./App.css";
 import { Header } from "./components/Header";
 import { HeroSection } from "./components/HeroSection";
-import { TestimonialsSection } from "./components/TestinomialsSection";
 import { StepsSection } from "./components/StepsSection";
+import { TestimonialsSection } from "./components/TestinomialsSection";
 import { CtaSection } from "./components/CtaSection";
 import { Footer } from "./components/Footer";
 
+// --- Main App Component ---
+
 function App() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white font-sans antialiased">
       <Header />
-      <HeroSection />
-      <TestimonialsSection />
-      <StepsSection />
-      <CtaSection />
+      <main>
+        <HeroSection />
+        <StepsSection />
+        <TestimonialsSection />
+        <CtaSection />
+      </main>
       <Footer />
     </div>
   );
