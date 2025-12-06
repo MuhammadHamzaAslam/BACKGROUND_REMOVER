@@ -1,11 +1,9 @@
 import { Header } from "./components/Header";
 import { HeroSection } from "./components/HeroSection";
 import { StepsSection } from "./components/StepsSection";
-import { TestimonialsSection } from "./components/TestinomialsSection";
 import { CtaSection } from "./components/CtaSection";
 import { Footer } from "./components/Footer";
-
-// --- Main App Component ---
+import { TestimonialsSection } from "./components/TestinomialsSection";
 
 function App() {
   return (

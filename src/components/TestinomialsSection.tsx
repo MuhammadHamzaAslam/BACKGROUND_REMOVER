@@ -1,42 +1,29 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 
-interface Testimonial {
-  quote: string;
-  author: string;
-  title: string;
-  avatar: string;
-  color: string;
-}
-
-const testimonials: Testimonial[] = [
-  {
-    quote:
-      "bg.removal is a game-changer for my e-commerce business. The quality is consistently excellent, saving me hours of manual editing every week.",
-    author: "Richard Nelson",
-    title: "E-commerce Founder",
-    avatar: "RN",
-    color: "bg-blue-600",
-  },
-  {
-    quote:
-      "The precision is incredible. I had a fantastic experience, and the output is flawless. I highly recommend this app to every designer.",
-    author: "Donald Jackman",
-    title: "Lead UI Designer",
-    avatar: "DJ",
-    color: "bg-amber-600",
-  },
-];
-
 export function TestimonialsSection() {
+  const testimonials = [
+    {
+      quote:
+        "bg.removal is a game-changer for my e-commerce business. The quality is consistently excellent, saving me hours of manual editing every week.",
+      author: "Richard Nelson",
+      title: "E-commerce Founder",
+      avatar: "RN",
+      color: "bg-blue-600",
+    },
+    {
+      quote:
+        "The precision is incredible. I had a fantastic experience, and the output is flawless. I highly recommend this app to every designer.",
+      author: "Donald Jackman",
+      title: "Lead UI Designer",
+      avatar: "DJ",
+      color: "bg-amber-600",
+    },
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
   const itemVariants = {
@@ -44,7 +31,7 @@ export function TestimonialsSection() {
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { type: "spring", stiffness: 100, damping: 12 },
+      transition: { type: "spring", stiffness: 100 },
     },
   };
 
@@ -69,11 +56,9 @@ export function TestimonialsSection() {
             className="bg-white border border-slate-200 rounded-3xl p-8 shadow-lg transition-all"
           >
             <Quote className="w-8 h-8 text-purple-300 mb-6" />
-
             <p className="text-xl italic text-slate-700 leading-relaxed mb-8">
               &ldquo;{testimonial.quote}&rdquo;
             </p>
-
             <div className="flex items-center gap-4">
               <div
                 className={`w-12 h-12 ${testimonial.color} rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md`}

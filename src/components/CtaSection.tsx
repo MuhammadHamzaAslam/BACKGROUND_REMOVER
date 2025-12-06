@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Button } from "./ui/button";
 import { CloudUpload } from "lucide-react";
+import { Button } from "./ui/button";
+
 export function CtaSection() {
   return (
     <section className="px-6 md:px-12 lg:px-20 py-20 bg-slate-900">
@@ -20,9 +21,12 @@ export function CtaSection() {
           viewport={{ once: true }}
           className="pt-4"
         >
-          <Button className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white rounded-full px-12 py-6 text-xl flex items-center gap-3 mx-auto group shadow-2xl shadow-purple-500/50 transform hover:scale-[1.03]">
-            <CloudUpload className="w-6 h-6" />
-            Upload Your Image Now
+          <Button
+            className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white rounded-full px-12 py-6 text-xl flex items-center gap-3 mx-auto group shadow-2xl shadow-purple-500/50 transform hover:scale-[1.05]"
+            onClick={() => document.getElementById("upload-input")?.click()}
+          >
+            <CloudUpload className="w-7 h-7 transition-transform group-hover:scale-110" />
+            Upload Your First Image
           </Button>
         </motion.div>
       </div>

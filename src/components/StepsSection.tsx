@@ -1,42 +1,31 @@
 import { motion } from "framer-motion";
-import { ArrowUpToLine, Download, Wand2 } from "lucide-react";
-
-interface Step {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-const steps: Step[] = [
-  {
-    icon: <ArrowUpToLine className="w-8 h-8" />,
-    title: "Upload Your Image",
-    description:
-      "Simply drag and drop or select the image file you want to edit. No account needed, start instantly.",
-  },
-  {
-    icon: <Wand2 className="w-8 h-8" />,
-    title: "Instant Background Removal",
-    description:
-      "Our AI automatically detects the subject and instantly cuts out the background with perfect precision.",
-  },
-  {
-    icon: <Download className="w-8 h-8" />,
-    title: "Download High-Res Result",
-    description:
-      "Get your transparent PNG or custom background image in seconds, ready for any project.",
-  },
-];
+import { ArrowUpToLine, Wand2, Download } from "lucide-react";
 
 export function StepsSection() {
+  const steps = [
+    {
+      icon: <ArrowUpToLine className="w-8 h-8" />,
+      title: "Upload Your Image",
+      description:
+        "Simply drag and drop or select the image file you want to edit. No account needed, start instantly.",
+    },
+    {
+      icon: <Wand2 className="w-8 h-8" />,
+      title: "Instant Background Removal",
+      description:
+        "Our AI automatically detects the subject and instantly cuts out the background with perfect precision.",
+    },
+    {
+      icon: <Download className="w-8 h-8" />,
+      title: "Download High-Res Result",
+      description:
+        "Get your transparent PNG or custom background image in seconds, ready for any project.",
+    },
+  ];
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
   };
 
   const itemVariants = {
@@ -44,7 +33,7 @@ export function StepsSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 10 },
+      transition: { type: "spring", stiffness: 100 },
     },
   };
 
@@ -74,14 +63,10 @@ export function StepsSection() {
             <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-700 rounded-xl flex items-center justify-center mb-6 shadow-xl">
               <span className="text-white">{step.icon}</span>
             </div>
-
-            <p className="text-sm font-semibold text-purple-600 mb-2">
-              STEP {index + 1}
-            </p>
-            <h3 className="text-2xl font-bold text-slate-900 mb-4">
+            <p className="text-xl font-bold text-slate-900 mb-3">
               {step.title}
-            </h3>
-            <p className="text-slate-600 leading-relaxed">{step.description}</p>
+            </p>
+            <p className="text-slate-600">{step.description}</p>
           </motion.div>
         ))}
       </motion.div>
