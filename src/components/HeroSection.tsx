@@ -14,7 +14,11 @@ const CLIPDROP_REMOVE_BG_ENDPOINT =
   "https://clipdrop-api.co/remove-background/v1";
 const CLIPDROP_API_KEY = import.meta.env.VITE_CLIPDROP_API_KEY;
 
-const withBackoff = async (fetchFn, maxRetries = 5, delay = 1000) => {
+const withBackoff = async (
+  fetchFn: () => Promise<Response>,
+  maxRetries = 5,
+  delay = 1000
+) => {
   for (let i = 0; i < maxRetries; i++) {
     try {
       const response = await fetchFn();
@@ -32,7 +36,7 @@ const withBackoff = async (fetchFn, maxRetries = 5, delay = 1000) => {
   throw new Error("API call failed after maximum retries.");
 };
 
-const callClipdropApiForBackgroundRemoval = async (imageFile) => {
+const callClipdropApiForBackgroundRemoval = async (imageFile: File) => {
   if (!CLIPDROP_API_KEY) {
     throw new Error(
       "ClipDrop API Key is missing. Please ensure VITE_CLIPDROP_API_KEY is set in your .env file."
@@ -70,9 +74,10 @@ const callClipdropApiForBackgroundRemoval = async (imageFile) => {
 
   const imageBlob = await response.blob();
 
-  return new Promise((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
+    // Added string type to Promise
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => resolve(reader.result as string); // Added as string
     reader.onerror = (error) => reject(error);
     reader.readAsDataURL(imageBlob);
   });
@@ -81,13 +86,15 @@ const callClipdropApiForBackgroundRemoval = async (imageFile) => {
 export function HeroSection() {
   const [isHovered, setIsHovered] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [originalImage, setOriginalImage] = useState(null);
-  const [originalImageUrl, setOriginalImageUrl] = useState(null);
-  const [resultImageUrl, setResultImageUrl] = useState(null);
-  const [error, setError] = useState(null);
+  // Using File | null for image state
+  const [originalImage, setOriginalImage] = useState<File | null>(null);
+  const [originalImageUrl, setOriginalImageUrl] = useState<string | null>(null);
+  const [resultImageUrl, setResultImageUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const fileInputRef = useRef(null);
-  const dropzoneRef = useRef(null);
+  // Fixed ref types to HTMLInputElement and HTMLElement
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dropzoneRef = useRef<HTMLElement>(null);
 
   const resetState = useCallback(() => {
     setOriginalImage(null);
@@ -99,8 +106,9 @@ export function HeroSection() {
     }
   }, []);
 
+  // Fixed file type to 'File'
   const processFile = useCallback(
-    async (file) => {
+    async (file: File) => {
       if (!file || !file.type.startsWith("image/")) {
         setError("Please select a valid image file.");
         return;
@@ -123,8 +131,8 @@ export function HeroSection() {
         console.error("Background Removal Error:", err);
         setError(
           `Failed to remove background: ${
-            err.message || "An unknown error occurred."
-          }`
+            (err as Error).message || "An unknown error occurred."
+          }` // Cast error to Error
         );
         setResultImageUrl(null);
       } finally {
@@ -134,7 +142,8 @@ export function HeroSection() {
     [resetState]
   );
 
-  const handleFileChange = (event) => {
+  // Fixed handleFileChange type
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       processFile(file);
@@ -142,6 +151,7 @@ export function HeroSection() {
   };
 
   const handleUploadClick = () => {
+    // Fixed click() error by correctly typing fileInputRef
     if (!isProcessing && !originalImage) {
       fileInputRef.current?.click();
     } else if (resultImageUrl) {
@@ -151,24 +161,24 @@ export function HeroSection() {
     } // else if (isProcessing) { do nothing }
   };
 
-  // Drag and Drop Handlers
-  const handleDragEnter = (e) => {
+  // Fixed Drag and Drop Handlers types
+  const handleDragEnter = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsHovered(true);
   };
-  const handleDragLeave = (e) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsHovered(false);
   };
-  const handleDragOver = (e) => {
+  const handleDragOver = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsHovered(true);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsHovered(false);
