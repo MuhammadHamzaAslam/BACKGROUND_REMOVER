@@ -1,4 +1,4 @@
-import { motion, Variants } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ArrowUpToLine, Wand2, Download } from "lucide-react";
 
 export function StepsSection() {
